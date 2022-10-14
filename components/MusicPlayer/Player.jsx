@@ -1,8 +1,24 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
+import { useGetSongDetailsQuery } from "../../redux/services/spotifyScraper";
 
-const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate, onLoadedData, repeat }) => {
+import { Loader } from "../Loader";
+
+const Player = ({
+  activeSong,
+  isPlaying,
+  volume,
+  seekTime,
+  onEnded,
+  onTimeUpdate,
+  onLoadedData,
+  repeat,
+}) => {
   const ref = useRef(null);
+
+  const { data, isFetching, error } = useGetSongDetailsQuery(activeSong?.name);
+
+  console.log(error && error);
   // eslint-disable-next-line no-unused-expressions
   if (ref.current) {
     if (isPlaying) {
@@ -22,7 +38,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
 
   return (
     <audio
-      // src={""}
+      src={data && data?.soundcloudTrack.audio[0].url}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}

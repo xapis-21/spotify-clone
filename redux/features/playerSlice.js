@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentSongs: [],
@@ -18,23 +18,24 @@ const playerSlice = createSlice({
     setActiveSong: (state, action) => {
       state.activeSong = action.payload.song;
 
-      if (action.payload?.data?.tracks?.hits) {
-        state.currentSongs = action.payload.data.tracks.hits;
-      } else if (action.payload?.data?.properties) {
-        state.currentSongs = action.payload?.data?.tracks;
-      } else {
-        state.currentSongs = action.payload.data;
-      }
-
+      state.currentSongs = action.payload.data.contents.items;
       state.currentIndex = action.payload.i;
       state.isActive = true;
     },
 
     nextSong: (state, action) => {
-      if (state.currentSongs[action.payload]?.track) {
-        state.activeSong = state.currentSongs[action.payload]?.track;
+      if (state.currentSongs[action.payload]?.name) {
+        state.activeSong = {
+          name: state.currentSongs[action.payload]?.name,
+          image: state.currentSongs[action.payload]?.album.cover[0].url,
+          artists: state.currentSongs[action.payload]?.album.artists,
+        };
       } else {
-        state.activeSong = state.currentSongs[action.payload];
+        state.activeSong = {
+          name: state.currentSongs[action.payload]?.name,
+          image: state.currentSongs[action.payload]?.album.cover[0].url,
+          artists: state.currentSongs[action.payload]?.album.artists,
+        };
       }
 
       state.currentIndex = action.payload;
@@ -42,10 +43,18 @@ const playerSlice = createSlice({
     },
 
     prevSong: (state, action) => {
-      if (state.currentSongs[action.payload]?.track) {
-        state.activeSong = state.currentSongs[action.payload]?.track;
+      if (state.currentSongs[action.payload]?.name) {
+        state.activeSong = {
+          name: state.currentSongs[action.payload]?.name,
+          image: state.currentSongs[action.payload]?.album.cover[0].url,
+          artists: state.currentSongs[action.payload]?.album.artists,
+        };
       } else {
-        state.activeSong = state.currentSongs[action.payload];
+        state.activeSong = {
+          name: state.currentSongs[action.payload]?.name,
+          image: state.currentSongs[action.payload]?.album.cover[0].url,
+          artists: state.currentSongs[action.payload]?.album.artists,
+        };
       }
 
       state.currentIndex = action.payload;
@@ -55,7 +64,6 @@ const playerSlice = createSlice({
     playPause: (state, action) => {
       state.isPlaying = action.payload;
     },
-
     selectGenreListId: (state, action) => {
       state.genreListId = action.payload;
     },

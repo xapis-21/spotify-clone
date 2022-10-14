@@ -1,24 +1,58 @@
 import Link from "next/link";
 import { PlayPauseSmall } from "./PlayPause";
+import { useDispatch } from "react-redux";
+import { playPause, setActiveSong } from "../redux/features/playerSlice";
 
+const PlaylistSong = ({
+  id,
+  name,
+  durationMs,
+  durationText,
+  albumName,
+  cover,
+  index,
+  artists,
+  isPlaying,
+  activeSong,
+  data,
+}) => {
+  const dispatch = useDispatch();
 
+  const handlePauseClick = () => {
+    dispatch(playPause(false));
+  };
 
-const PlaylistSong = ({ id, name, durationMs, durationText,albumName,cover,index,artists }) => {
+  const handlePlayClick = () => {
+    dispatch(
+      setActiveSong({
+        song: {
+          name: name,
+          image: cover[0].url,
+          artists: artists,
+        },
+        data,
+        i: index,
+      })
+    );
 
-
-
+    dispatch(playPause(true));
+  };
 
   return (
     <div className="flex justify-between group hover:bg-gray-500/20 py-1 px-2 rounded-sm">
       <div className="flex items-center w-[300px] justify-start">
-        <div
-          className="h-8 w-8 text-gray-300/50 grid place-items-center mr-4"
-        >
+        <div className="h-8 w-8 text-gray-300/50 grid place-items-center mr-4">
           <span className=" text-gray-300 group-hover:hidden duration-300">
             {index + 1}
           </span>
           <span className="hidden group-hover:block duration-300">
-            <PlayPauseSmall />
+            <PlayPauseSmall
+              handlePause={handlePauseClick}
+              handlePlay={handlePlayClick}
+              name={name}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+            />
           </span>
         </div>
         <div className="h-12 w-12">

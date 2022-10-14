@@ -1,23 +1,21 @@
 import { useRouter } from "next/router";
-import { Loader, Error,PlaylistSong } from "../../components";
-import {PlayPause} from '../../components/PlayPause'
+import { Loader, Error, PlaylistSong } from "../../components";
+import { PlayPause } from "../../components/PlayPause";
 import { useSelector, useDispatch } from "react-redux";
-import {BiTimeFive} from "react-icons/bi"
+import { BiTimeFive } from "react-icons/bi";
 
-import {
-  useGetPlaylistTracksQuery,
-} from "../../redux/services/spotifyScraper";
+import { useGetPlaylistTracksQuery } from "../../redux/services/spotifyScraper";
 
 const Playlist = () => {
-
   const router = useRouter();
   const id = router.query.id;
   const { data, isFetching, error } = useGetPlaylistTracksQuery(id);
 
-  const { playlistDetails } = useSelector((state) => state.player);
+  const { playlistDetails, activeSong, isPlaying, currentSongs } = useSelector(
+    (state) => state.player
+  );
 
- const {image,desc,name,owner,trackCount,type} = playlistDetails
-console.log(name)
+  const { image, desc, name, owner, trackCount, type } = playlistDetails;
 
   const colors = [
     "from-red-500",
@@ -37,11 +35,11 @@ console.log(name)
     "from-rose-500",
   ];
 
-  const bgColor = colors[Math.floor(Math.random() * colors.length-1)];
-
+  const bgColor = colors[Math.floor(Math.random() * colors.length - 1)];
 
   if (isFetching) return <Loader title={"Loading songs..."} />;
   // if (error) return <Error error={error} />;
+  console.log(currentSongs);
 
   return (
     <div className="w-full h-full relative flex flex-col">
@@ -90,23 +88,32 @@ console.log(name)
               <BiTimeFive fontSize={20} />
             </div>
           </li>
-          {data?.contents.items.map(
-            (
-              { id, name, durationMs, durationText, album, podcast, type },
-              i
-            ) => (
-              <li key={id}>
-                <PlaylistSong
-                  index={i}
-                  id={id}
-                  name={name}
-                  durationMs={durationMs}
-                  durationText={durationText}
-                  albumName={type === "episode" ? podcast?.name : album?.name}
-                  cover={type === "episode" ? podcast?.cover : album?.cover}
-                  artists={type === "episode" ? [] : album?.artists}
-                />
-              </li>
+          {error ? (
+            <div className="w-full grid place-items-center text-gray-400">
+              {error?.data.reason}
+            </div>
+          ) : (
+            data?.contents.items.map(
+              (
+                { id, name, durationMs, durationText, album, podcast, type },
+                i
+              ) => (
+                <li key={id}>
+                  <PlaylistSong
+                    index={i}
+                    id={id}
+                    name={name}
+                    durationMs={durationMs}
+                    durationText={durationText}
+                    albumName={type === "episode" ? podcast?.name : album?.name}
+                    cover={type === "episode" ? podcast?.cover : album?.cover}
+                    artists={type === "episode" ? [] : album?.artists}
+                    isPlaying={isPlaying}
+                    activeSong={activeSong}
+                    data={data}
+                  />
+                </li>
+              )
             )
           )}
         </ul>

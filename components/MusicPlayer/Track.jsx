@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Track = ({ isPlaying, isActive, activeSong }) => (
   <div className="flex-1 flex items-center justify-start">
@@ -7,10 +7,14 @@ const Track = ({ isPlaying, isActive, activeSong }) => (
     </div> */}
     <div className="w-[50%]">
       <p className="truncate text-white text-base">
-        {activeSong?.title ? activeSong?.title : 'No active Song'}
+        {activeSong?.name ? activeSong?.name : "No active Song"}
       </p>
       <p className="truncate text-gray-300 text-sm">
-        {activeSong?.subtitle ? activeSong?.subtitle : 'No active Song'}
+        {activeSong?.artists
+          ? activeSong?.artists.map((item) => (
+              <span key={item.name}>{item.name}</span>
+            ))
+          : "No active Song"}
       </p>
     </div>
   </div>

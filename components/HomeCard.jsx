@@ -18,14 +18,6 @@ const HomeCard = ({ id, name, owner, images, trackCount, desc,cover,artists,type
       })
     );
 
-    console.log("hello>>>>", {
-      desc,
-      image: images ? images[0][0]?.url : cover[0]?.url,
-      type,
-      name,
-      owner: artists ? artists[0].name : owner.name,
-      trackCount,
-    });
   };
   return (
     <Link href={`/playlist/${id}`}>
