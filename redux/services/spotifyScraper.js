@@ -7,7 +7,7 @@ export const spotifyScraperApi = createApi({
     prepareHeaders: (headers) => {
       headers.set(
         "X-RapidAPI-Key",
-        "b67f11c726mshad8dcee2b8498cep1355b1jsncf24334d2e8f"
+        process.env.NEXT_PUBLIC_SPOTIFY_SCRAPER_KEY
       );
       return headers;
     },
