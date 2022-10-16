@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PlayPauseSmall } from "./PlayPause";
 import { useDispatch } from "react-redux";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { SiAudiomack } from "react-icons/si";
 
 const PlaylistSong = ({
   id,
@@ -43,7 +44,13 @@ const PlaylistSong = ({
       <div className="flex items-center w-[300px] justify-start">
         <div className="h-8 w-8 text-gray-300/50 grid place-items-center mr-4">
           <span className=" text-gray-300 group-hover:hidden duration-300">
-            {index + 1}
+            {activeSong?.name === name ? (
+              <span className="text-green-500">
+                <SiAudiomack />
+              </span>
+            ) : (
+              <span>{index + 1}</span>
+            )}
           </span>
           <span className="hidden group-hover:block duration-300">
             <PlayPauseSmall

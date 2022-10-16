@@ -9,11 +9,6 @@ const Sidebar = () => {
 
   const sidebarLinks = [
     {
-      title: "Your Library",
-      path: "library",
-      icon: <BiLibrary fontSize={25} />,
-    },
-    {
       title: "Top tracks",
       path: "top-tracks",
       icon: <SiApplemusic fontSize={25} />,

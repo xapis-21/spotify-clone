@@ -3,15 +3,18 @@ import { Loader, Error, PlaylistSong } from "../../components";
 import { PlayPause } from "../../components/PlayPause";
 import { useSelector, useDispatch } from "react-redux";
 import { BiTimeFive } from "react-icons/bi";
+import { playPause, setActiveSong } from "../../redux/features/playerSlice";
 
 import { useGetPlaylistTracksQuery } from "../../redux/services/spotifyScraper";
 
 const Playlist = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const id = router.query.id;
   const { data, isFetching, error } = useGetPlaylistTracksQuery(id);
 
-  const { playlistDetails, activeSong, isPlaying, currentSongs } = useSelector(
+  const { playlistDetails, activeSong, isPlaying } = useSelector(
     (state) => state.player
   );
 
@@ -35,11 +38,43 @@ const Playlist = () => {
     "from-rose-500",
   ];
 
+  const handlePauseClick = () => {
+    dispatch(playPause(false));
+  };
+
+  const handlePlayClick = () => {
+    if (!activeSong?.name) {
+      dispatch(
+        setActiveSong({
+          song: {
+            name: data && data[0].name,
+            image: data && data[0].cover[0].url,
+            artists: data && data[0].artists,
+          },
+          data,
+          i: 0,
+        })
+      );
+    }
+    // dispatch(
+    //   setActiveSong({
+    //     song: {
+    //       name: name,
+    //       image: cover[0].url,
+    //       artists: artists,
+    //     },
+    //     data,
+    //     i: index,
+    //   })
+    // );
+
+    dispatch(playPause(true));
+  };
+
   const bgColor = colors[Math.floor(Math.random() * colors.length - 1)];
 
   if (isFetching) return <Loader title={"Loading songs..."} />;
   // if (error) return <Error error={error} />;
-  console.log(currentSongs);
 
   return (
     <div className="w-full h-full relative flex flex-col">
@@ -64,7 +99,13 @@ const Playlist = () => {
       </div>
       <div className="bg-black/50 w-full flex-grow backdrop-blur-sm p-8 ">
         <div className="mb-8">
-          <PlayPause />
+          <PlayPause
+            handlePause={handlePauseClick}
+            handlePlay={handlePlayClick}
+            name={activeSong?.name}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+          />
         </div>
         <ul className="space-y-4 h-fit">
           <li className="flex justify-between group  py-1 px-4 rounded-sm border-b border-white/10 pb-8 items-center">
