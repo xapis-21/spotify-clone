@@ -25,7 +25,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="h-full flex flex-col text-slate-200/80 bg-gray-500/10 backdrop-blur-lg w-[300px] pt-4 px-4 rounded-lg justify-between">
+    <div className="h-full flex flex-col text-slate-200/80 bg-gray-500/10 backdrop-blur-lg w-full max-w-[300px] pt-4 px-4 rounded-lg justify-between">
       <ul className="flex flex-col space-y-4">
         {sidebarLinks.map(({ title, path, icon }) => (
           <li key={path} className="group hover:text-white p-2 px-4 rounded-md">
