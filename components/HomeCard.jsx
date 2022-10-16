@@ -2,8 +2,17 @@ import Link from "next/link";
 import { TextTruncate } from "react-text-truncate";
 import { useSelector, useDispatch } from "react-redux";
 import { setPlaylistDetails } from "../redux/features/playerSlice";
-const HomeCard = ({ id, name, owner, images, trackCount, desc,cover,artists,type }) => {
-
+const HomeCard = ({
+  id,
+  name,
+  owner,
+  images,
+  trackCount,
+  desc,
+  cover,
+  artists,
+  type,
+}) => {
   const dispatch = useDispatch();
 
   const getPlaylistMeta = () => {
@@ -14,10 +23,9 @@ const HomeCard = ({ id, name, owner, images, trackCount, desc,cover,artists,type
         type,
         name,
         owner: artists ? artists[0].name : owner.name,
-        trackCount
+        trackCount,
       })
     );
-
   };
   return (
     <Link href={`/playlist/${id}`}>

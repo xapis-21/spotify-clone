@@ -9,24 +9,19 @@ const Sidebar = () => {
 
   const sidebarLinks = [
     {
+      title: "Your Library",
+      path: "/",
+      icon: <BiLibrary fontSize={25} />,
+    },
+    {
       title: "Top tracks",
       path: "top-tracks",
       icon: <SiApplemusic fontSize={25} />,
     },
     {
-      title: "Daily Viral Tracks",
-      path: "daily-viral-tracks",
-      icon: <GiMusicalNotes fontSize={25} />,
-    },
-    {
       title: "Top Artists",
       path: "top-artists",
       icon: <GiMusicSpell fontSize={25} />,
-    },
-    {
-      title: "Weekly Top Albums",
-      path: "weekly-top-albums",
-      icon: <BiAlbum fontSize={25} />,
     },
   ];
   return (

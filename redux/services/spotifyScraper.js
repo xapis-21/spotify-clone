@@ -13,7 +13,9 @@ export const spotifyScraperApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTopCharts: builder.query({ query: () => "/chart/tracks/top" }),
+    getTopCharts: builder.query({
+      query: () => "/chart/tracks/top?type=daily",
+    }),
     getHomePageOverview: builder.query({ query: () => "/home" }),
     getSongDetails: builder.query({
       query: (trackName) => `/track/download/soundcloud?track=${trackName}`,

@@ -43,31 +43,6 @@ const Playlist = () => {
   };
 
   const handlePlayClick = () => {
-    if (!activeSong?.name) {
-      dispatch(
-        setActiveSong({
-          song: {
-            name: data && data[0].name,
-            image: data && data[0].cover[0].url,
-            artists: data && data[0].artists,
-          },
-          data,
-          i: 0,
-        })
-      );
-    }
-    // dispatch(
-    //   setActiveSong({
-    //     song: {
-    //       name: name,
-    //       image: cover[0].url,
-    //       artists: artists,
-    //     },
-    //     data,
-    //     i: index,
-    //   })
-    // );
-
     dispatch(playPause(true));
   };
 

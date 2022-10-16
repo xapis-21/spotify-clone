@@ -31,7 +31,7 @@ const PlaylistSong = ({
           image: cover[0].url,
           artists: artists,
         },
-        data,
+        data: data?.contents.items,
         i: index,
       })
     );

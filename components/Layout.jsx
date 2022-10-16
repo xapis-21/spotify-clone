@@ -3,7 +3,7 @@ import { Footer, Header, Sidebar } from "./";
 
 const Layout = ({ children }) => {
   return (
-    <div className="w-full h-screen max-h-screen flex flex-col  bg-black ">
+    <div className="w-screen h-screen max-h-screen flex flex-col  bg-black ">
       <Header />
       <main className="flex h-full items-center space-x-2 px-4 overflow-hidden">
         <Sidebar />
